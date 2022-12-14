@@ -28,7 +28,7 @@ void Board::evaluate(int move)
 {
 	int col = move % _boardSize;
 	int row = move / _boardSize;
-	auto sym = _turn == Turn::X ? CellStatus::X : CellStatus::O; // _board.at(row).at(col);
+	auto sym = _turn == Turn::X ? CellStatus::X : CellStatus::O; 
 
 	bool win_row = true;
 	for (const auto& cell : _board.at(row)) {
@@ -57,8 +57,37 @@ void Board::evaluate(int move)
 	}
 }
 
-std::vector<int> Board::findAvailableMoves()
-{
+std::vector<int> Board::findAvailableLocalMoves() {
+	std::vector<int> local_moves;
+
+	for (int i = _boardSize - 1; i >= 0; --i) {
+		for (int j = 0; j < _boardSize; ++j) {
+			auto cell = _board.at(i).at(j);
+			if (cell == CellStatus::Empty && hasNeighbors(i, j)) {
+				local_moves.push_back(_boardSize * i + j);
+			}
+		}
+	}
+
+	return local_moves;
+}
+
+bool Board::hasNeighbors(int i, int j) {
+	for (int k = i - 1; k < _boardSize && k <= i + 1; ++k) {
+		for (int m = j - 1; m < _boardSize && m <= j + 1; ++m) {
+			if (k >= 0 && m >= 0 && _board.at(k).at(m) != CellStatus::Empty) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+std::vector<int> Board::findAvailableMoves() {
+	if (_board.size() > 3)
+		return findAvailableLocalMoves();
+
 	std::vector<int> moves;
 
 	for (int i = _boardSize - 1; i >= 0; --i) {
@@ -85,5 +114,6 @@ bool Board::makeMove(int move)
 	_board.at(row).at(col) = _turn == Turn::X ? CellStatus::X : CellStatus::O;
 	evaluate(move);
 	_turn = _turn == Turn::X ? Turn::O : Turn::X;
+
 	return true;
 }

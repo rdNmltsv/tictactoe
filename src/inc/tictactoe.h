@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include "board.h"
 
 enum class GameMode {
@@ -27,11 +28,14 @@ public:
 private:
 	void playerTurn();
 	void aiTurn();
-	std::pair<int, int> minimax(Board board, bool is_maximizing, int depth);
+	std::pair<int, int> minimax(Board board, bool is_maximizing, int depth, int alpha, int beta);
 
 	
 private:
 	Board _board;
 	GameMode _mode;
 	bool _first_move;
+
+	using CacheType = std::map<BoardType, int>;
+	CacheType _cache;
 };

@@ -20,10 +20,11 @@ enum class GameStatus {
 	Draw
 };
 
+
+using BoardType = std::vector<std::vector<CellStatus>>;
+
 class Board {
 public:
-	using BoardType = std::vector<std::vector<CellStatus>>;
-
 	Board(int size) :
 		_boardSize(size),
 		_board(_boardSize, std::vector<CellStatus>(size)),
@@ -41,7 +42,8 @@ public:
 	~Board() = default;
 
 public:
-	const int getSize() { return _boardSize * _boardSize; }
+	const int getSize() const { return _boardSize * _boardSize; }
+	const BoardType& getPosition() const { return _board; }
 	bool isFinished() { return _finished; }
 	GameStatus getGameStatus() { return _status; }
 	Turn getTurn() { return _turn; }
@@ -53,6 +55,8 @@ public:
 
 private:
 	void evaluate(int move);
+	std::vector<int> findAvailableLocalMoves();
+	bool hasNeighbors(int i, int j);
 
 private:
 	const int _boardSize;
