@@ -13,6 +13,9 @@ Yet another tic-tac-toe implementation on C++.
 9. at the last step you want to build binaries - you can use chosen generator, or you can do this using command line: just type in *cmake --build .* while you're in build/ directory
 10. after building done you'll find executable *tictactoe.exe* in *build-folder/*.
 
+# How to test
+1. run CTest from project folder: ctest -C Debug -VV (-C <config> <- for generator with configs, -VV for verbose output).
+
 # How to use
 1. run executable from *build-folder/*.
 2. select board size.
