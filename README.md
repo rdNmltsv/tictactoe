@@ -20,5 +20,6 @@ Yet another tic-tac-toe implementation on C++.
 1. run executable from *build-folder/*.
 2. select board size.
 3. select game mode.
-3.1. if playing vs computer you can choose who goes first.
-4. enjoy.
+4. if playing vs computer you can choose who goes first.
+5. enter number of corresponding empty cell on board to make move.
+6. player who succeeds in placing 3/4/5 of their marks in a horizontal, vertical, or diagonal row is the winner.
